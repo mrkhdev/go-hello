@@ -16,5 +16,5 @@ func main() {
 	fmt.Println("bugfix feature")
 	fmt.Println("Nieuwe feature")
 	fmt.Println("Nieuwe feadfture")
-	fmt.Println("Nieuwe feature")
+	fmt.Println("Nieusswe feature")
 }
