@@ -1,3 +1,5 @@
+name: Bump version and push tag
+
 on:
   push:
     branches:
@@ -19,8 +21,4 @@ jobs:
           release_branches: master
           default_bump: patch
           tag_prefix: v
-          custom_release_rules: |
-            BREAKING CHANGE:major
-            feat:minor
-            fix:patch
-            chore:patch
+          custom_release_rules: feat:minor,fix:patch
