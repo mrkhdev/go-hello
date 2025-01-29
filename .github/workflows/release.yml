@@ -36,12 +36,19 @@ jobs:
           cache: false
           check-latest: true
 
-      # 3. Bouw de binary
+      # 3. Get version info
+      - name: Get version info
+        id: version
+        run: |
+          echo "version=$(git describe --tags --abbrev=0)" >> $env:GITHUB_OUTPUT
+          echo "commit=$(git rev-parse --short HEAD)" >> $env:GITHUB_OUTPUT
+
+      # 4. Bouw de binary
       - name: Build binary
         run: |
-          go build -o ${{ env.APP_NAME }}.exe
+          go build -ldflags "-X main.Version=${{ steps.version.outputs.version }} -X main.Commit=${{ steps.version.outputs.commit }}" -o ${{ env.APP_NAME }}.exe
 
-      # 4. Upload de binary als artifact
+      # 5. Upload de binary als artifact
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:

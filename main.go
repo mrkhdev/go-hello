@@ -8,7 +8,7 @@ var (
 )
 
 func main() {
-	fmt.Printf("Hello, World from version %s (commit: %s)! \n", Version, Commit)
+	fmt.Printf("Hello, World from version %s (%s)\n", Version, Commit)
 
 	fmt.Println("fixxxie feature")
 }
