@@ -17,6 +17,8 @@ jobs:
       # 1. Check de code uit
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       # 2. Stel de juiste Go-versie in
       - name: Set up Go
