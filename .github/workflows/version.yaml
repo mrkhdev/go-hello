@@ -17,6 +17,6 @@ jobs:
           default_bump: patch
           tag_prefix: v
           custom_release_rules: |
-            major:BREAKING CHANGE
-            minor:feat
-            patch:fix
+            BREAKING CHANGE:major
+            feat:minor
+            fix:patch
