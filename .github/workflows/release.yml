@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - 'v*'  # Trigger op elke tag die begint met 'v' (bijvoorbeeld v1.0.0)
+  release:
+    types: [created] # Manual release
 
 permissions:
   contents: write  # Nodig voor het uploaden van release assets
