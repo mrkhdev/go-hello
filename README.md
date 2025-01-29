@@ -40,3 +40,7 @@ git clone https://github.com/username/go-hello.git
 ```
 
 fix
+
+# Features:
+- feature
+- en dit
