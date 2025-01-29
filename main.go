@@ -11,4 +11,5 @@ func main() {
 	fmt.Printf("Hello, World from version %s (%s)\n", Version, Commit)
 
 	fmt.Println("bugfix feature")
+	fmt.Println("Nieuwe feature")
 }
