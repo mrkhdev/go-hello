@@ -4,9 +4,9 @@
 
 ![Go Hello Banner](assets/go-hello-logo.jpeg)
 
-[![Go Version](https://img.shields.io/github/go-mod/go-version/username/go-hello)](https://go.dev/)
+[![Go Version](https://img.shields.io/github/go-mod/go-version/mrkhdev/go-hello)](https://go.dev/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Stars](https://img.shields.io/github/stars/username/go-hello?style=social)](https://github.com/username/go-hello/stargazers)
+[![Stars](https://img.shields.io/github/stars/mrkhdev/go-hello?style=social)](https://github.com/mrkhdev/go-hello/stargazers)
 
 A lightning-fast, minimalist HTTP server showcasing the beauty of Go's simplicity.
 
