@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [windows-latest, linux-latest, macos-latest] # Bouw voor meerdere platforms
+        os: [windows-latest]  # Only Windows build now
     steps:
       # 1. Check de code uit
       - name: Checkout code
@@ -24,40 +24,28 @@ jobs:
       # 3. Bouw de binary
       - name: Build binary
         run: |
-          GOOS=${{ matrix.os == 'windows-latest' && echo 'windows' || echo 'linux' }}
+          GOOS=windows
           GOARCH=amd64
-          OUTPUT_NAME=myapp${{ matrix.os == 'windows-latest' && echo '.exe' || echo '' }}
+          OUTPUT_NAME=myapp.exe
           go build -o $OUTPUT_NAME
 
       # 4. Upload de binary als artifact
       - name: Upload binary
         uses: actions/upload-artifact@v3
         with:
-          name: myapp-${{ matrix.os }}
-          path: myapp${{ matrix.os == 'windows-latest' && echo '.exe' || echo '' }}
+          name: myapp-windows
+          path: myapp.exe
 
   release:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      # 1. Download de artifacts van de build-job
       - name: Download artifacts
         uses: actions/download-artifact@v3
         with:
-          name: myapp-windows-latest
+          name: myapp-windows
           path: ./binaries/windows
-      - name: Download artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: myapp-linux-latest
-          path: ./binaries/linux
-      - name: Download artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: myapp-macos-latest
-          path: ./binaries/macos
 
-      # 2. Upload de binaries naar de release
       - name: Upload binaries to release
         uses: actions/upload-release-asset@v1
         with:
@@ -65,17 +53,3 @@ jobs:
           asset_path: ./binaries/windows/myapp.exe
           asset_name: myapp-windows.exe
           label: Windows Binary
-      - name: Upload binaries to release
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./binaries/linux/myapp
-          asset_name: myapp-linux
-          label: Linux Binary
-      - name: Upload binaries to release
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./binaries/macos/myapp
-          asset_name: myapp-macos
-          label: macOS Binary
