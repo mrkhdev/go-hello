@@ -1,3 +1,3 @@
 # go-hello
 
-This is just a test.
+This is just a test. Nog een test.
