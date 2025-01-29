@@ -1,5 +1,9 @@
 # Changelog
 
+## [v0.15.0](https://github.com/mrkhdev/go-hello/tree/v0.15.0) (2025-01-29)
+
+[Full Changelog](https://github.com/mrkhdev/go-hello/compare/v0.14.0...v0.15.0)
+
 ## [v0.14.0](https://github.com/mrkhdev/go-hello/tree/v0.14.0) (2025-01-29)
 
 [Full Changelog](https://github.com/mrkhdev/go-hello/compare/v0.13.0...v0.14.0)
