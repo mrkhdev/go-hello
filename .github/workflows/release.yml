@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - 'v*'  # Trigger op elke tag die begint met 'v' (bijvoorbeeld v1.0.0)
+env:
+  APP_NAME: go-hello
 
 permissions:
   contents: write  # Nodig voor het uploaden van release assets
@@ -27,14 +29,14 @@ jobs:
       # 3. Bouw de binary
       - name: Build binary
         run: |
-          go build -o myapp.exe  # Vereenvoudigd omdat we al op Windows draaien
+          go build -o ${{ env.APP_NAME }}.exe
 
       # 4. Upload de binary als artifact
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
           name: myapp-windows
-          path: myapp.exe
+          path: ${{ env.APP_NAME }}.exe
 
   release:
     needs: build
@@ -51,6 +53,6 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: ./binaries/windows/myapp.exe
+          files: ./binaries/windows/${{ env.APP_NAME }}.exe
           generate_release_notes: true  # Automatisch release notes genereren
           tag_name: ${{ github.ref_name }}  # Gebruik de tag naam als release naam
