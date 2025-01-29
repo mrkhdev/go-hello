@@ -55,8 +55,34 @@ jobs:
           name: myapp-windows
           path: ${{ env.APP_NAME }}.exe
 
+  changelog:
+    runs-on: ubuntu-latest
+    outputs:
+      changelog: ${{ steps.changelog.outputs.changelog }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Generate changelog
+        id: changelog
+        uses: heinrichreimer/github-changelog-generator-action@v2.3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          output: CHANGELOG.md
+          stripGeneratorNotice: true
+
+      - name: Commit and push changelog
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add CHANGELOG.md
+          git commit -m "docs: update changelog for ${{ github.ref_name }}" || echo "No changes to commit"
+          git push
+
   release:
-    needs: build
+    needs: [build, changelog]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -83,5 +109,16 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: ./binaries/windows/${{ env.APP_NAME }}.exe
-          generate_release_notes: true  # Automatisch release notes genereren
-          tag_name: ${{ steps.get_tag.outputs.tag }}  # Gebruik de gevonden tag
+          generate_release_notes: true
+          body: |
+            ## What's Changed
+            See the [CHANGELOG.md](CHANGELOG.md) for all changes.
+            
+            ## Binary Information
+            - Version: ${{ steps.version.outputs.version }}
+            - Commit: ${{ steps.version.outputs.commit }}
+            
+            ## Installation
+            1. Download the binary for your platform
+            2. Run the executable
+          tag_name: ${{ steps.get_tag.outputs.tag }}
