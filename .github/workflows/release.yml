@@ -55,32 +55,6 @@ jobs:
           name: myapp-windows
           path: ${{ env.APP_NAME }}.exe
 
-  changelog:
-    runs-on: ubuntu-latest
-    outputs:
-      changelog: ${{ steps.changelog.outputs.changelog }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          fetch-tags: true
-
-      - name: Generate changelog
-        id: changelog
-        uses: heinrichreimer/github-changelog-generator-action@v2.3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          output: CHANGELOG.md
-          stripGeneratorNotice: true
-
-      - name: Commit and push changelog
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add CHANGELOG.md
-          git commit -m "docs: update changelog for ${{ github.ref_name }}" || echo "No changes to commit"
-          git push
-
   release:
     needs: [build, changelog]
     runs-on: ubuntu-latest
