@@ -10,5 +10,5 @@ var (
 func main() {
 	fmt.Printf("Hello, World from version %s (commit: %s)! \n", Version, Commit)
 
-	fmt.Println("Complete new feature.")
+	fmt.Println("Btteer feature.")
 }
