@@ -1,9 +1,16 @@
 name: Build and Release Binaries
 
 on:
+  workflow_run:
+    workflows: ["Bump version and push tag"]
+    types:
+      - completed
+    branches:
+      - master
   push:
     tags:
-      - 'v*'  # Trigger op elke tag die begint met 'v' (bijvoorbeeld v1.0.0)
+      - 'v*'  # Behoud de mogelijkheid om direct op tags te triggeren
+
 env:
   APP_NAME: go-hello
 
