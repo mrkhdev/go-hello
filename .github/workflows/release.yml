@@ -99,6 +99,17 @@ jobs:
           git fetch --tags
           echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
 
+      - name: Draft Release Notes
+        uses: release-drafter/release-drafter@v5
+        id: release_notes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          config-name: release-drafter.yml
+          commitish: ${{ github.sha }}
+          tag: ${{ steps.get_tag.outputs.tag }}
+          version: ${{ steps.get_tag.outputs.tag }}
+
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
@@ -109,27 +120,5 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: ./binaries/windows/${{ env.APP_NAME }}.exe
-          generate_release_notes: true
-          body: |
-            ## 🎉 What's Changed
-            
-            ### 🚀 New Features
-            ${{ contains(github.event.head_commit.message, 'feat:') && github.event.head_commit.message || '' }}
-            
-            ### 🐛 Bug Fixes
-            ${{ contains(github.event.head_commit.message, 'fix:') && github.event.head_commit.message || '' }}
-            
-            ### 📚 Documentation
-            See the [CHANGELOG.md](CHANGELOG.md) for all changes.
-            
-            ## 📦 Binary Information
-            - 🏷️ Version: `${{ steps.version.outputs.version }}`
-            - 🔍 Commit: `${{ steps.version.outputs.commit }}`
-            
-            ## 🚀 Installation
-            1. 📥 Download the binary for your platform
-            2. ▶️ Run the executable
-            
-            ## 🙏 Thank You
-            Thanks for using our software!
+          body: ${{ steps.release_notes.outputs.body }}
           tag_name: ${{ steps.get_tag.outputs.tag }}
