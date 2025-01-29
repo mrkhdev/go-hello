@@ -1,8 +1,9 @@
 name: Build and Release Binaries
 
 on:
-  release:
-    types: [created] # Start de workflow wanneer een nieuwe release wordt aangemaakt
+  push:
+    tags:
+      - 'v*'  # Trigger op elke tag die begint met 'v' (bijvoorbeeld v1.0.0)
 
 permissions:
   contents: write  # Nodig voor het uploaden van release assets
@@ -47,7 +48,9 @@ jobs:
           name: myapp-windows
           path: ./binaries/windows
 
-      - name: Upload binaries to release
+      - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           files: ./binaries/windows/myapp.exe
+          generate_release_notes: true  # Automatisch release notes genereren
+          tag_name: ${{ github.ref_name }}  # Gebruik de tag naam als release naam
