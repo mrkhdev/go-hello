@@ -56,7 +56,7 @@ jobs:
           path: ${{ env.APP_NAME }}.exe
 
   release:
-    needs: [build, changelog]
+    needs: [build]
     runs-on: ubuntu-latest
     permissions:
       contents: write
