@@ -9,10 +9,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        os: [windows-latest]  # Only Windows build now
+    runs-on: windows-latest  # Gewijzigd naar windows-latest
     steps:
       # 1. Check de code uit
       - name: Checkout code
@@ -29,10 +26,7 @@ jobs:
       # 3. Bouw de binary
       - name: Build binary
         run: |
-          GOOS=windows
-          GOARCH=amd64
-          OUTPUT_NAME=myapp.exe
-          go build -o $OUTPUT_NAME
+          go build -o myapp.exe  # Vereenvoudigd omdat we al op Windows draaien
 
       # 4. Upload de binary als artifact
       - name: Upload binary
@@ -45,7 +39,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # Nodig voor het uploaden van release assets
+      contents: write
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v4
