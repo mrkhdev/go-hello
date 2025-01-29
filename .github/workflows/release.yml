@@ -13,7 +13,7 @@ jobs:
     steps:
       # 1. Check de code uit
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # 2. Stel de juiste Go-versie in
       - name: Set up Go
@@ -47,8 +47,6 @@ jobs:
           path: ./binaries/windows
 
       - name: Upload binaries to release
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v1
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./binaries/windows/myapp.exe
-          asset_name: myapp-windows.exe
+          files: ./binaries/windows/myapp.exe
