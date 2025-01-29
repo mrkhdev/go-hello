@@ -16,7 +16,7 @@ jobs:
           release_branches: master
           default_bump: patch
           tag_prefix: v
-          commit_message_pattern: "^(feat|fix|chore|refactor|docs|style|perf|test|build|ci|revert)(\\([\\w\\s-]*\\))?:"
-          major_pattern: "BREAKING CHANGE:"
-          minor_pattern: "^feat:"
-          patch_pattern: "^fix:"
+          custom_release_rules: |
+            major:BREAKING CHANGE
+            minor:feat
+            patch:fix
