@@ -1,9 +1,6 @@
 name: Build and Release Binaries
 
 on:
-  workflow_run:
-    branches:
-      - master
   push:
     tags:
       - 'v*'  # Behoud de mogelijkheid om direct op tags te triggeren
