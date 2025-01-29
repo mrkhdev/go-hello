@@ -52,4 +52,3 @@ jobs:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: ./binaries/windows/myapp.exe
           asset_name: myapp-windows.exe
-          label: Windows Binary
