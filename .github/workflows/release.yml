@@ -2,9 +2,6 @@ name: Build and Release Binaries
 
 on:
   workflow_run:
-    workflows: ["Bump version and push tag"]
-    types:
-      - completed
     branches:
       - master
   push:
