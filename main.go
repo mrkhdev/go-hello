@@ -10,5 +10,5 @@ var (
 func main() {
 	fmt.Printf("Hello, World from version %s (%s)\n", Version, Commit)
 
-	fmt.Println("fixxxie feature")
+	fmt.Println("bugfix feature")
 }
